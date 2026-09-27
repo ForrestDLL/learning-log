@@ -1,0 +1,24 @@
+{% extends "learning_logs/base.html" %}
+{% block content %}
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="h4 card-title mb-3">编辑主题</h1>
+
+          <form action="{% url "learning_logs:edit_topic" topic.pk %}" method="post">
+          {% csrf_token %}
+          <label for="{{ form.topic_text.id_for_label }}" class="form-label">
+            {{ form.topic_text.label }}
+          </label>
+          {{ form.topic_text }}
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary" name="submit">保存修改</button>
+            <a class="btn btn-outline-secondary" href="{% url "learning_logs:topics" %}">返回</a>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

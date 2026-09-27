@@ -1,0 +1,19 @@
+# ===== Python 自动生成的缓存 =====
+__pycache__/
+*.py[cod]
+.ruff_cache/
+
+# ===== 虚拟环境：67MB、6753 个文件，绝对不能提交 =====
+ll_env/
+
+# ===== 本地数据库：二进制文件，git 看不出改了什么 =====
+db.sqlite3
+
+# ===== 编辑器和系统 =====
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# ===== Claude Code 的本地个人设置 =====
+.claude/

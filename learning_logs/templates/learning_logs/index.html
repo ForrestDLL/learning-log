@@ -1,0 +1,12 @@
+{% extends "learning_logs/base.html" %}
+{% block content %}
+  <div class="text-center py-5">
+    <h1 class="fw-bold mb-3">欢迎访问学习笔记！</h1>
+    <p class="text-secondary fs-5 mb-4">
+      学习笔记可以记录你学习的内容，或者~<br>
+      其他任何感想。
+    </p>
+    <a class="btn btn-primary me-2" href="{% url "learning_logs:topics" %}">查看主题</a>
+    <a class="btn btn-outline-primary" href="{% url "learning_logs:new_topic" %}">新建主题</a>
+  </div>
+{% endblock content %}
