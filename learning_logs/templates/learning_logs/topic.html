@@ -13,6 +13,7 @@
       <li class="list-group-item">
         <div class="text-secondary small mb-1">{{ entry.date|date:"Y-m-d, H:i"}}</div>
         <div class="lh-lg">{{ entry.entry_text|linebreaksbr }}</div>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url "learning_logs:edit_entry" entry.pk %}">编辑</a>
       </li>
     {% empty %}
       <li class="list-group-item text-center text-secondary py-4">

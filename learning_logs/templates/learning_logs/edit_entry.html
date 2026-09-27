@@ -4,8 +4,9 @@
     <div class="col-md-6">
       <div class="card shadow-sm">
         <div class="card-body">
-        <h1 class="h4 card-title mb-3">添加新条目</h1>
-        <form action="{% url "learning_logs:new_entry" topic.pk %}" method="post">
+          <h1 class="h4 card-title mb-3">编辑条目</h1>
+
+          <form action="{% url "learning_logs:edit_entry" entry.pk %}" method="post">
           {% csrf_token %}
           <label for="{{ form.entry_text.id_for_label }}" class="form-label">
             {{ form.entry_text.label }}
@@ -14,10 +15,13 @@
           {% if form.entry_text.errors %}
             <div class="text-danger small mt-1">{{ form.entry_text.errors.0 }}</div>
           {% endif %}
-          <button class="btn btn-primary w-100 mt-3" name="submit">添加条目</button>
-        </form>
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary" name="submit">保存修改</button>
+            <a class="btn btn-outline-secondary" href="{% url "learning_logs:topic" topic.pk %}">返回</a>
+          </div>
+          </form>
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 {% endblock content %}
