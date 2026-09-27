@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -10,21 +11,24 @@ def index(request):
     return render(request, "learning_logs/index.html")
 
 
+@login_required
 def topics(request):
     """展示所有主题"""
-    topics = Topic.objects.all()
+    topics = Topic.objects.filter(owner=request.user)
     context = {"topics": topics}
     return render(request, "learning_logs/topics.html", context)
 
 
+@login_required
 def topic(request, topic_id):
     """访问主题下的条目"""
-    topic = Topic.objects.get(pk=topic_id)
+    topic = get_object_or_404(Topic, pk=topic_id, owner=request.user)
     entries = topic.entries.order_by("-date")
     context = {"topic": topic, "entries": entries}
     return render(request, "learning_logs/topic.html", context)
 
 
+@login_required
 def new_topic(request):
     """新增主题"""
     if request.method != "POST":
@@ -34,17 +38,20 @@ def new_topic(request):
         # POST提交的数据：处理数据
         form = TopicForm(data=request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("learning_logs:topics")  # 保存后调回主题列表
+            topic = form.save(commit=False)
+            topic.owner = request.user
+            topic.save()
+            return redirect("learning_logs:topics")  # 保存后返回主题列表
 
     # 显示空表单，或指出表单数据无效
     context = {"form": form}
     return render(request, "learning_logs/new_topic.html", context)
 
 
+@login_required
 def edit_topic(request, topic_id):
     """编辑现有主题"""
-    topic = Topic.objects.get(pk=topic_id)
+    topic = get_object_or_404(Topic, pk=topic_id, owner=request.user)
     if request.method != "POST":
         # 原数据填进表单
         form = TopicForm(instance=topic)
@@ -59,9 +66,10 @@ def edit_topic(request, topic_id):
     return render(request, "learning_logs/edit_topic.html", context)
 
 
+@login_required
 def new_entry(request, topic_id):
     # 增加当前主题的新条目
-    topic = Topic.objects.get(pk=topic_id)
+    topic = get_object_or_404(Topic, pk=topic_id, owner=request.user)
     if request.method != "POST":
         form = EntryForm()
     else:
@@ -76,9 +84,10 @@ def new_entry(request, topic_id):
     return render(request, "learning_logs/new_entry.html", context)
 
 
+@login_required
 def edit_entry(request, entry_id):
     """编辑条目内容"""
-    entry = Entry.objects.get(pk=entry_id)
+    entry = get_object_or_404(Entry, pk=entry_id, topic__owner=request.user)
     topic = entry.topic
     if request.method != "POST":
         form = EntryForm(instance=entry)
