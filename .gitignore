@@ -17,3 +17,9 @@ desktop.ini
 
 # ===== Claude Code 的本地个人设置 =====
 .claude/
+
+# ===== collectstatic 的输出：服务器上重新生成即可 =====
+staticfiles/
+
+# ===== 密钥文件：绝对不能进 git =====
+.env
