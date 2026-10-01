@@ -12,6 +12,9 @@
             {{ form.topic_text.label }}
           </label>
           {{ form.topic_text }}
+          {% if form.topic_text.errors %}
+            <div class="text-danger small mt-1">{{ form.topic_text.errors.0 }}</div>
+          {% endif %}          
           <div class="d-flex gap-2 mt-3">
             <button class="btn btn-primary" name="submit">保存修改</button>
             <a class="btn btn-outline-secondary" href="{% url "learning_logs:topics" %}">返回</a>

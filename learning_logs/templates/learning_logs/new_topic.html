@@ -11,6 +11,9 @@
               {{ form.topic_text.label }}
             </label>
             {{ form.topic_text }}
+            {% if form.topic_text.errors %}
+              <div class="text-danger small mt-1">{{ form.topic_text.errors.0 }}</div>
+            {% endif %}            
             <button class="btn btn-primary w-100 mt-3" name="submit">添加主题</button>
           </form>  
         </div>
