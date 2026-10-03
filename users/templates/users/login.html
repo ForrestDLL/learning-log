@@ -5,7 +5,7 @@
       <div class="card shadow-sm">
         <div class="card-body">
           <h1 class="h4 card-title mb-3">登录</h1>
-          <form action="{% url "users:login" %}" method="post">
+          <form action="" method="post">
             {% csrf_token %}
             {% if form.non_field_errors %}
               <div class="text-danger small mb-2">{{ form.non_field_errors.0 }}</div>
