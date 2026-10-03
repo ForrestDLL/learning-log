@@ -11,9 +11,13 @@
   <ul class="list-group">
     {% for entry in entries %}
       <li class="list-group-item">
-        <div class="text-secondary small mb-1">{{ entry.date|date:"Y-m-d, H:i"}}</div>
+        <div class="text-secondary small mb-1">{{ entry.date|date:"Y-m-d, H:i" }}</div>
         <div class="lh-lg">{{ entry.entry_text|linebreaksbr }}</div>
         <a class="btn btn-outline-secondary btn-sm" href="{% url "learning_logs:edit_entry" entry.pk %}">编辑</a>
+        <form action="{% url "learning_logs:delete_entry" entry.pk %}" class="d-inline" method="post">
+          {% csrf_token %}
+          <button class="btn btn-outline-danger btn-sm" >删除</button>
+        </form>
       </li>
     {% empty %}
       <li class="list-group-item text-center text-secondary py-4">

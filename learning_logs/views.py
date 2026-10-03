@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -99,3 +100,14 @@ def edit_entry(request, entry_id):
         
     context = {"entry": entry, "topic": topic, "form": form}
     return render(request, "learning_logs/edit_entry.html", context)
+
+
+@login_required
+@require_POST
+def delete_entry(request, entry_id):
+    """删除指定条目"""
+    entry = get_object_or_404(Entry, pk=entry_id, topic__owner=request.user)
+    entry.delete()
+    
+    return redirect("learning_logs:topic", topic_id=entry.topic_id)
+        
