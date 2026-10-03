@@ -18,6 +18,7 @@
               {% endif %}
             {% endfor %}
             <button class="btn btn-primary w-100 mt-3">登录</button>
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
           </form>
           <p class="text-secondary small mt-3 mb-0">
             还没有账号？<a href="{% url "users:register" %}">去注册</a>

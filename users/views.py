@@ -27,7 +27,7 @@ def login_view(request):
         form = LoginForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user()) # 取出校验通过的用户    
-            return redirect("learning_logs:index")
+            return redirect(request.POST.get("next") or "learning_logs:index")
         
     context = {"form": form}
     return render(request, "users/login.html", context)
